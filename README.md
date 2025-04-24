@@ -1,40 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 🐯 Chatbot FURIA (QG da FURIA) - Experiência Conversacional para Fãs de CS:GO
 
-## Getting Started
+Este é um projeto desenvolvido para o **Challenge #1 - Experiência Conversacional FURIA**, com o objetivo de criar uma interface interativa e informativa voltada para os fãs do time de CS da FURIA Esports.
 
-First, run the development server:
+## 🎯 Objetivo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Proporcionar uma **experiência conversacional envolvente** para os torcedores, trazendo informações relevantes, curiosidades, notícias, escalações, próximos jogos e outras funcionalidades que aproximam o fã do time.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Funcionalidades
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- 🧠 Chatbot inteligente com integração à API da OpenAI
+- 📅 Calendário de jogos e próximos campeonatos
+- 🧾 Histórico de partidas e desempenho da equipe
+- 🕹️ Perfil dos jogadores com estatísticas
+- 🎙️ Curiosidades e momentos marcantes do time
+- 🖼️ Interface web responsiva com Next.js
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 📹 Demonstração
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## 🧑‍💻 Tecnologias utilizadas
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [OpenAI API](https://platform.openai.com/)
+- DataStax
