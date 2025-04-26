@@ -1,13 +1,6 @@
 import { DataAPIClient } from '@datastax/astra-db-ts';
-import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
 import OpenAI from "openai";
-
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-
 import "dotenv/config";
-
-
-type SimilarityMetric = "dot_product" | "cosine" | "euclidean"
 
 const {
     ASTRA_DB_NAMESPACE, 
@@ -15,89 +8,131 @@ const {
     ASTRA_DB_API_ENDPOINT, 
     ASTRA_DB_APPLICATION_TOKEN, 
     OPENAI_API_KEY 
-} = process.env
+} = process.env;
 
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY })
-
-const furiaData = [
-    'https://www.furia.gg/',
-    'https://x.com/FURIA',
-    'https://www.facebook.com/furiagg',
-    'https://www.instagram.com/furiagg/?hl=pt-br',
-    'https://www.twitch.tv/furiatv',
-    'https://www.furia.gg/produtos/collabs/adidas',
-    'https://profilerr.net/pt/cs-go/matches/furia-vs-themongolz/',
-    'https://profilerr.net/pt/cs-go/team/furia/',
-    'https://draft5.gg/partida/36342-FURIA-vs-The-MongolZ-PGL-Bucharest-2025',
-    'https://draft5.gg/partida/36349-FURIA-vs-Virtus.pro-PGL-Bucharest-2025',
-    'https://draft5.gg/campeonato/2064-PGL-Astana-2025',
-    'https://draft5.gg/campeonato/2082-IEM-Dallas-2025',
-    'https://draft5.gg/campeonato/1798-BLAST.tv-Austin-Major-2025',
-    'https://www.hltv.org/team/8297/furia',
-    'https://profilerr.net/pt/cs-go/matches/furia-vs-themongolz/#teamsPlayers',
-    'https://escharts.com/pt/teams/csgo/furia',
-    'https://draft5.gg/equipe/330-FURIA',
-    'https://www.flashscore.com.br/equipe/furia-counter-strike/nLNfD94g/',
-    'https://www.hltv.org/team/8297/furia',
-
-]
-
-const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN)
-const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE})
-
-const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 512,
-    chunkOverlap: 100
-})
-
-const createCollection = async (similarityMetric: SimilarityMetric = "dot_product") => {
-    const res = await db.createCollection(ASTRA_DB_COLLECTION, {
-        vector: {
-            dimension: 1536,
-            metric: similarityMetric
-        }
-    })
-    console.log(res)
+// Validação das variáveis de ambiente
+if (!ASTRA_DB_APPLICATION_TOKEN || !ASTRA_DB_API_ENDPOINT || !ASTRA_DB_NAMESPACE || !ASTRA_DB_COLLECTION || !OPENAI_API_KEY) {
+    throw new Error('Variáveis de ambiente não estão definidas corretamente');
 }
 
-const loadSampleData = async () => {
-    const collection = await db.collection(ASTRA_DB_COLLECTION)
-    for await ( const url of furiaData) {
-        const content = await scrapePage(url)
-        const chunks = await splitter.splitText(content)
-        for await (const chunk of chunks) {
+// Inicialização do cliente OpenAI
+const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+
+// Dados manuais para inserção
+const manualData = [
+    {
+        text: "A line-up atual da FURIA em CS2 é composta por: FalleN, yuurih, KSCERATO, chelo e skullz.",
+        categoria: "line-up",
+        tipo: "manual",
+        fonte: "manual",
+        prioridade: 10,
+        tags: ["jogadores", "lineup", "CS2"]
+    },
+    {
+        text: "A FURIA conquistou o ESL Pro League Season 12: North America em 2020, um dos seus maiores títulos!",
+        categoria: "títulos",
+        tipo: "manual",
+        fonte: "manual",
+        prioridade: 8,
+        tags: ["títulos", "histórico", "conquistas"]
+    },
+    {
+        text: "Sabia que o FalleN, da FURIA, é conhecido como 'O Professor' por sua liderança e experiência no CS?",
+        categoria: "curiosidades",
+        tipo: "manual",
+        fonte: "manual",
+        prioridade: 6,
+        tags: ["curiosidades", "jogadores", "FalleN"]
+    },
+    {
+        text: "A FURIA enfrentará a MIBR no dia 28 de abril de 2025, às 15h, pela PGL Bucharest 2025. Não perca!",
+        categoria: "eventos",
+        tipo: "manual",
+        fonte: "manual",
+        prioridade: 9,
+        tags: ["eventos", "agenda", "partidas"]
+    },
+    {
+        text: "Quer comprar a nova camisa da FURIA? Acesse a loja oficial em https://www.furia.gg/loja!",
+        categoria: "loja",
+        tipo: "manual",
+        fonte: "manual",
+        prioridade: 7,
+        tags: ["loja", "produtos", "camisa"]
+    },
+    {
+        text: "Últimas partidas da FURIA no CS2 em abril de 2025: 09/04 - derrota por 0x2 contra The MongolZ; 08/04 - derrota por 0x2 contra Virtus.pro; 07/04 - vitória por 2x1 sobre compLexity; 06/04 - vitória por 2x0 sobre Apogee; 22/03 - derrota por 1x2 contra M80.",
+        categoria: "resultados",
+        tipo: "manual",
+        fonte: "Flashscore",
+        prioridade: 9,
+        tags: ["resultados", "partidas", "CS2"]
+    },
+    {
+        text: "Estatísticas recentes da FURIA no CS2: 4 vitórias nos últimos 5 confrontos (80%); 7 vitórias nos últimos 10 confrontos (70%); nos últimos 3 meses, 14 jogos com 9 vitórias (65%); no último ano, 60 jogos com 38 vitórias (64%).",
+        categoria: "estatísticas",
+        tipo: "manual",
+        fonte: "EGamersWorld",
+        prioridade: 8,
+        tags: ["estatísticas", "desempenho", "CS2"]
+    },
+    {
+        text: "Desempenho recente da FURIA em eventos: na ESL Pro League Season 21, 1 vitória e 3 derrotas, não avançando aos playoffs; na BLAST Open Spring 2025, eliminada após duas derrotas consecutivas.",
+        categoria: "eventos",
+        tipo: "manual",
+        fonte: "bo3.gg",
+        prioridade: 7,
+        tags: ["eventos", "desempenho", "CS2"]
+    }
+];
+
+// Inicialização do cliente Astra DB
+const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN);
+const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE });
+
+// Função para inserir dados manuais
+const insertManualData = async (collection) => {
+    for await (const data of manualData) {
+        console.log(`Inserindo dado manual: ${data.text}...`);
+        try {
+            // Geração do embedding
             const embedding = await openai.embeddings.create({
                 model: "text-embedding-3-small",
-                input: chunk,
+                input: data.text,
                 encoding_format: "float"
-            })
+            });
 
-            const vector = embedding.data[0].embedding
+            const vector = embedding.data[0].embedding;
 
+            // Inserção no Astra DB
             const res = await collection.insertOne({
                 $vector: vector,
-                text: chunk,
-            })
-            console.log(res)
+                text: data.text,
+                origem: "manual",
+                categoria: data.categoria,
+                tipo: data.tipo,
+                fonte: data.fonte,
+                prioridade: data.prioridade,
+                data_insercao: new Date(),
+                tags: data.tags
+            });
+            console.log(`Dado manual inserido:`, res);
+        } catch (err) {
+            console.error(`Erro ao inserir dado manual: ${data.text}`, err);
         }
     }
-}
+};
 
-const scrapePage = async (url: string) => {
-    const loader = new PuppeteerWebBaseLoader(url, {
-        launchOptions: {
-            headless: true
-        },
-        gotoOptions: {
-            waitUntil: "domcontentloaded"
-        },
-        evaluate: async (page, browser) => {
-            const result = await page.evaluate(() => document.body.innerHTML)
-            await browser.close()
-            return result
-        }
-    })
-    return ( await loader.scrape())?.replace(/<[^>]*>?/gm, '') 
-}
+// Função principal para carregar os dados manuais
+const loadManualData = async () => {
+    try {
+        const collection = await db.collection(ASTRA_DB_COLLECTION);
+        await insertManualData(collection);
+        console.log('Todos os dados manuais foram inseridos com sucesso!');
+    } catch (err) {
+        console.error('Erro ao carregar dados manuais:', err);
+    }
+};
 
-createCollection().then(() => loadSampleData())
+// Executar a inserção de dados manuais
+loadManualData();
