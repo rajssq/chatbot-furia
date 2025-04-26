@@ -23,7 +23,7 @@ Proporcionar uma **experiência conversacional envolvente** para os torcedores, 
 
 O gif a seguir é uma breve demonstração de como utilizar o chat e de exemplos de perguntas para fazer. (Gif acelerado 4x)
 
-![DEMO-GIF](/chatbot-furia/app/assets/demo-gif.gif)
+![DEMO-GIF](./app/assets/demo-gif.gif)
 
 ## 🧑‍💻 Tecnologias utilizadas
 
