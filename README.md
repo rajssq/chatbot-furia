@@ -22,6 +22,7 @@ Proporcionar uma **experiência conversacional envolvente** para os torcedores, 
 ## 📹 Demonstração
 
 O gif a seguir é uma breve demonstração de como utilizar o chat e de exemplos de perguntas para fazer. (Gif acelerado 4x)
+### ESPERE ALGUNS SEGUNDOS PARA O GIF APARECER ###
 
 ![DEMO-GIF](./app/assets/demo-gif.gif)
 
