@@ -1,5 +1,5 @@
 import { DataAPIClient } from '@datastax/astra-db-ts';
-import { PuppeteerWebBaseLoader } from 'langchain/document_loaders/web/puppeteer';
+import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
 import OpenAI from "openai";
 
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
@@ -20,15 +20,26 @@ const {
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY })
 
 const furiaData = [
-    'https://pt.wikipedia.org/wiki/Furia_Esports',
     'https://www.furia.gg/',
-    'https://draft5.gg/equipe/330-FURIA/resultados',
-    'https://draft5.gg/equipe/330-FURIA',
-    'https://draft5.gg/proximas-partidas',
-    'https://tips.gg/pt/team/furia-csgo/',
-    'https://www.instagram.com/furiagg/?hl=pt-br',
     'https://x.com/FURIA',
-    'https://bo3.gg/pt/teams/furia'
+    'https://www.facebook.com/furiagg',
+    'https://www.instagram.com/furiagg/?hl=pt-br',
+    'https://www.twitch.tv/furiatv',
+    'https://www.furia.gg/produtos/collabs/adidas',
+    'https://profilerr.net/pt/cs-go/matches/furia-vs-themongolz/',
+    'https://profilerr.net/pt/cs-go/team/furia/',
+    'https://draft5.gg/partida/36342-FURIA-vs-The-MongolZ-PGL-Bucharest-2025',
+    'https://draft5.gg/partida/36349-FURIA-vs-Virtus.pro-PGL-Bucharest-2025',
+    'https://draft5.gg/campeonato/2064-PGL-Astana-2025',
+    'https://draft5.gg/campeonato/2082-IEM-Dallas-2025',
+    'https://draft5.gg/campeonato/1798-BLAST.tv-Austin-Major-2025',
+    'https://www.hltv.org/team/8297/furia',
+    'https://profilerr.net/pt/cs-go/matches/furia-vs-themongolz/#teamsPlayers',
+    'https://escharts.com/pt/teams/csgo/furia',
+    'https://draft5.gg/equipe/330-FURIA',
+    'https://www.flashscore.com.br/equipe/furia-counter-strike/nLNfD94g/',
+    'https://www.hltv.org/team/8297/furia',
+
 ]
 
 const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN)

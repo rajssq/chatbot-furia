@@ -32,6 +32,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "next.config.mjs",
     ".next/types/**/*.ts"
   ],
   "ts-node": {

@@ -1,3 +1,4 @@
+import "./global.css"
 
 export const metadata = {
     title: "QG da FURIA",

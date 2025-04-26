@@ -1,0 +1,175 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("./assets/background.jpeg");
+}
+
+main {
+    width: 80vw;
+    height: 80vh;
+    background: #000000a4;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: center;
+    color: #FFE83F;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.414); /* Adicionei uma sombra suave para profundidade */
+}
+
+section {
+    width: 100%;
+}
+
+section.populated {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: #facc15 transparent;
+}
+
+section.populated::-webkit-scrollbar {
+    width: 4px; /* Largura da barra de rolagem */
+    height: 0px;
+}
+
+section.populated::-webkit-scrollbar-thumb {
+    background-color: #facc15; /* Cor da barra de rolagem */
+    border-radius: 10px; /* Bordas arredondadas */
+}
+
+section.populated::-webkit-scrollbar-track {
+    background: transparent; /* Cor do fundo da barra de rolagem */
+}
+
+
+.starter-text {
+    padding: 0 80px;
+}
+
+form {
+    height: 60px; /* Aumentei a altura para um visual mais espaçoso */
+    width: 100%;
+    display: flex;
+    border-top:#828282 solid 2px;
+    padding-top: 20px;
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+}
+
+input.question-box {
+    width: 85%;
+    padding: 12px 15px;
+    font-size: 15px;
+    background-color: #ffffff25;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px 0 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+input.question-box:focus {
+    outline: none;
+    background-color: #ffffff31; /* Leve mudança de cor ao focar */
+}
+
+input[type=submit] {
+    width: 15%;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    color: #ffffff;
+    background-color: #ffffff25;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+input[type=submit]:hover {
+    background-color: #ffe93f77; /* Um tom mais escuro de amarelo ao passar o mouse */
+}
+
+input[type=submit]:active {
+    transform: scale(0.98); /* Efeito de "pressione" ao clicar */
+}
+
+input:focus {
+    outline: none;
+}
+
+.bubble {
+    margin: 8px;
+    padding: 8px;
+    font-size: 15px;
+    border: none;
+    color: #383838;
+    box-shadow: #959da533 0 8px 24px;
+    width: 80%;
+    text-align: left;
+}
+
+.bubble.user {
+    border-radius: 20px 20px 0 20px;
+    background-color: rgb(254, 255, 181);
+    margin-left: auto;
+}
+
+.bubble.assistant {
+    border-radius: 20px 20px 20px 0;
+    background-color: #FFE83F;
+}
+
+.prompt-suggestion-row {
+    width: 100%;
+}
+
+.prompt-suggestion-button {
+    margin: 8px;
+    padding: 8px;
+    font-size: 15px;
+    border: none;
+    background-color: #ffffff;
+    border-radius: 10px;
+    color: #383838;
+    box-shadow: #ffe93f6e 0 8px 24px;
+    cursor: pointer;
+}
+
+.loader {
+    margin: 10px;
+    width: 60px;
+    aspect-ratio: 4;
+    background:
+        no-repeat radial-gradient(circle closest-side, #FFE83F 90%, #0000) 0% 50%,
+        no-repeat radial-gradient(circle closest-side, #FFE83F 90%, #0000) 50% 50%,
+        no-repeat radial-gradient(circle closest-side, #FFE83F 90%, #0000) 100% 50%
+    ;
+    background-size: calc(100% / 3) 100%;
+    animation: loading 1s infinite linear;
+}
+
+@keyframes loading {
+    33% {
+        background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%;
+    }
+    50% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%;
+    }
+    66% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
+    }
+}
+
