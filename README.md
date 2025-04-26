@@ -11,13 +11,19 @@ Proporcionar uma **experiência conversacional envolvente** para os torcedores, 
 ## 🚀 Funcionalidades
 
 - 🧠 Chatbot inteligente com integração à API da OpenAI
-- 👥 Informações sobre os jogadores do time
+- 🖼️ Interface web responsiva com Next.js
+- 📊 Estatística do time
+- 📆 Calendário de jogos
+- 👥 Informações sobre os jogadores
 - 🏪 Informações sobre os produtos da FURIA
 - 🧾 Histórico de partidas
 - 📺 Onde assistir os jogos
-- 🖼️ Interface web responsiva com Next.js
 
 ## 📹 Demonstração
+
+O gif a seguir é uma breve demonstração de como utilizar o chat e de exemplos de perguntas para fazer. (Gif acelerado 4x)
+
+![DEMO-GIF](/chatbot-furia/app/assets/demo-gif.gif)
 
 ## 🧑‍💻 Tecnologias utilizadas
 
