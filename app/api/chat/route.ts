@@ -50,9 +50,9 @@ try {
 const embeddingCache = new Map();
 
 // Função para extrair e ordenar partidas do texto
-const extractLatestGame = (text) => {
+const extractLatestGame = (text: string): string | null => {
     const matchPattern = /(\d{2}\/\d{2})\s*-\s*(vitória|derrota)\s*por\s*(\d+x\d+)\s*(?:contra|sobre)\s*([^\;]+)/g;
-    let matches = [...text.matchAll(matchPattern)];
+    const matches: RegExpMatchArray[] = [...text.matchAll(matchPattern)];
     
     // Converter as partidas em objetos com data e resultado
     const games = matches.map(match => {
@@ -68,14 +68,14 @@ const extractLatestGame = (text) => {
         };
     });
 
-    // Ordenar por data (mais recente primeiro)
-    games.sort((a, b) => b.date - a.date);
+    // Ordenar por data (mais recente primeiro) usando getTime()
+    games.sort((a, b) => b.date.getTime() - a.date.getTime());
 
     // Retornar apenas o jogo mais recente
     return games.length > 0 ? games[0].fullText : null;
 };
 
-export async function POST(req) {
+export async function POST(req: Request) {
     console.log('Requisição recebida para /api/chat');
     try {
         const body = await req.json();
@@ -154,7 +154,7 @@ export async function POST(req) {
                     }
                 );
 
-                let documents = await cursor.toArray();
+                const documents = await cursor.toArray();
 
                 // Ordenar manualmente por prioridade e data_insercao
                 documents.sort((a, b) => {
