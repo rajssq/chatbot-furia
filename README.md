@@ -2,6 +2,8 @@
 
 Este é um projeto desenvolvido para o **Challenge #1 - Experiência Conversacional FURIA**, com o objetivo de criar uma interface interativa e informativa voltada para os fãs do time de CS da FURIA Esports.
 
+👉[Acesse Aqui](https://qg-da-furia.vercel.app/)
+
 
 ![DEMO](./app/assets/demo.png)
 
