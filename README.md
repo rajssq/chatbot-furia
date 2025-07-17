@@ -32,7 +32,6 @@ O gif a seguir é uma breve demonstração de como utilizar o chat e de exemplos
 ## 🧑‍💻 Tecnologias utilizadas
 
 - [Next.js](https://nextjs.org/):
-- React.js
 - [TypeScript](https://www.typescriptlang.org/)
 - AI SDK
 - [OpenAI API](https://platform.openai.com/)
